@@ -1,19 +1,17 @@
 package com.ryzhov_andrey.crud.repository;
 
-import com.ryzhov_andrey.crud.model.Skill;
-
 import java.util.List;
 
 public interface GenericRepository<T, ID> {
 
-    T getById(ID id) throws Exception;
+    T getById(ID id);
 
-    List<T> getAll() throws Exception;
+    List<T> getAll();
 
-    Skill save(T t) throws Exception;
+    T save(T t);
 
-    Skill update(T t) throws Exception;
+    T update(T t);
 
-    void deleteById(ID id) throws Exception;
+    void deleteById(ID id);
 
 }

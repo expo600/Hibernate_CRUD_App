@@ -9,109 +9,78 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class GsonSkillRepositoryImpl implements SkillRepository {
 
     private final static String pathToFile = "\\src\\main\\resources\\";
     private final static String FILE_NAME = "skills.json";
+    private final Gson GSON = new Gson();
+
 
     @Override
-    public Skill getById(Integer id) throws IOException {
-        List<Skill> skills;
-        BufferedReader reader = new BufferedReader(
-                new InputStreamReader(
-                        new FileInputStream(Paths.get("").toAbsolutePath() + pathToFile + FILE_NAME),
-                        StandardCharsets.UTF_8));
-        String str = reader
-                .lines()
-                .collect(Collectors.joining(System.lineSeparator()));
+    public Skill getById(Long id) {
+        return getAllSkills().stream().filter(s -> s.getId().equals(id)).findFirst().orElse(null);
+    }
 
-        Type type = new TypeToken<List<Skill>>() {
-        }.getType();
-        skills = new Gson().fromJson(str, type);
+    @Override
+    public List<Skill> getAll() {
+        return getAllSkills();
+    }
 
-        Skill current = null;
-        for (Skill s : skills) {
-            if (s.getId().equals(id)) {
-                current = s;
-                break;
+    @Override
+    public Skill save(Skill skill) {
+        List<Skill> existingSkills = getAllSkills();
+        skill.setId(autoIncrementId(existingSkills));
+        existingSkills.add(skill);
+        writeSkillToFile(existingSkills);
+        return skill;
+    }
+
+    @Override
+    public Skill update(Skill skill) {
+        List<Skill> existingSkills = getAllSkills();
+        existingSkills.forEach(existingSkill -> {
+            if(existingSkill.getId().equals(skill.getId())) {
+                existingSkill.setName(skill.getName());
             }
-        }
-        if (current != null) {
-            return current;
-        }
-        throw new IOException();
+        });
+        writeSkillToFile(existingSkills);
+        return skill;
     }
 
     @Override
-    public List<Skill> getAll() throws IOException {
-        List<Skill> skills;
-        BufferedReader reader = new BufferedReader(
-                new InputStreamReader(
-                        new FileInputStream(Paths.get("").toAbsolutePath() + pathToFile + FILE_NAME),
-                        StandardCharsets.UTF_8));
-        String str = reader
-                .lines()
-                .collect(Collectors.joining(System.lineSeparator()));
-        Type type = new TypeToken<List<Skill>>() {
-        }.getType();
-        skills = new Gson().fromJson(str, type);
-        return skills;
+    public void deleteById(Long id) {
+        List<Skill> existingSkills = getAllSkills();
+        existingSkills.removeIf(s -> s.getId().equals(id));
+        writeSkillToFile(existingSkills);
     }
 
-    @Override
-    public Skill save(Skill s) throws IOException {
-        List<Skill> skills;
-        BufferedReader reader = new BufferedReader(
-                new InputStreamReader(
-                        new FileInputStream(Paths.get("").toAbsolutePath() + pathToFile + FILE_NAME),
-                        StandardCharsets.UTF_8));
-        String str = reader
-                .lines()
-                .collect(Collectors.joining(System.lineSeparator()));
-        Type type = new TypeToken<List<Skill>>() {
-        }.getType();
-        skills = new Gson().fromJson(str, type);
-        skills.add(s);
-        // сохранить коллекцию в json
-        String jsonCollection = new Gson().toJson(skills);
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter
-                (Paths.get("").toAbsolutePath() + pathToFile + FILE_NAME, false))) {
-            bw.write(jsonCollection);
-            bw.newLine();
-        } catch (IOException e) {
+    private List<Skill> getAllSkills() {
+        try {
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(
+                            new FileInputStream(Paths.get("").toAbsolutePath() + pathToFile + FILE_NAME),
+                            StandardCharsets.UTF_8));
+            String str = reader
+                    .lines()
+                    .collect(Collectors.joining(System.lineSeparator()));
+
+            Type type = new TypeToken<List<Skill>>() {
+            }.getType();
+            return GSON.fromJson(str, type);
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
+            return Collections.emptyList();
         }
-        return s;
     }
 
-    @Override
-    public void deleteById(Integer id) throws IOException {
-        List<Skill> skills;
-        BufferedReader reader = new BufferedReader(
-                new InputStreamReader(
-                        new FileInputStream(Paths.get("").toAbsolutePath() + pathToFile + FILE_NAME),
-                        StandardCharsets.UTF_8));
-        String str = reader
-                .lines()
-                .collect(Collectors.joining(System.lineSeparator()));
-        Type type = new TypeToken<List<Skill>>() {
-        }.getType();
-        skills = new Gson().fromJson(str, type);
-
-        Skill removeById = null;
-        for (Skill s : skills
-        ) {
-            if (s.getId().equals(id)) {
-                removeById = s;
-                break;
-            }
-        }
-        skills.remove(removeById);
-        String jsonCollection = new Gson().toJson(skills);
-        // сохранить коллекцию в json
+    private void writeSkillToFile(List<Skill> skills) {
+        String jsonCollection = GSON.toJson(skills);
         try (BufferedWriter bw = new BufferedWriter(new FileWriter
                 (Paths.get("").toAbsolutePath() + pathToFile + FILE_NAME, false))) {
             bw.write(jsonCollection);
@@ -121,10 +90,8 @@ public class GsonSkillRepositoryImpl implements SkillRepository {
         }
     }
 
-    @Override
-    public Skill update(Skill s) throws IOException {
-        deleteById(s.getId());
-        save(s);
-        return s;
+    private Long autoIncrementId(List<Skill> skills) {
+        Skill maxIdSkill = skills.stream().max(Comparator.comparing(Skill::getId)).orElse(null);
+        return Objects.nonNull(maxIdSkill) ? maxIdSkill.getId() + 1 : 1;
     }
 }

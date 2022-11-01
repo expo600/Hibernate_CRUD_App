@@ -1,0 +1,7 @@
+com\ryzhov_andrey\crud\model\Skill.class
+com\ryzhov_andrey\crud\repository\gson\GsonSpecialtyRepositoryImp.class
+com\ryzhov_andrey\crud\repository\SpecialtyRepository.class
+com\ryzhov_andrey\crud\model\Status.class
+com\ryzhov_andrey\crud\model\Specialty.class
+com\ryzhov_andrey\crud\repository\SkillRepository.class
+com\ryzhov_andrey\crud\repository\gson\GsonSpecialtyRepositoryImp$1.class
