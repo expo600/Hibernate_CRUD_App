@@ -3,6 +3,7 @@ package com.ryzhov_andrey.crud.repository.gson;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ryzhov_andrey.crud.model.Skill;
+import com.ryzhov_andrey.crud.model.Status;
 import com.ryzhov_andrey.crud.repository.SkillRepository;
 
 import java.io.*;
@@ -47,6 +48,7 @@ public class GsonSkillRepositoryImpl implements SkillRepository {
         existingSkills.forEach(existingSkill -> {
             if(existingSkill.getId().equals(skill.getId())) {
                 existingSkill.setName(skill.getName());
+                existingSkill.setStatus(Status.ACTIVE);
             }
         });
         writeSkillToFile(existingSkills);
@@ -56,24 +58,19 @@ public class GsonSkillRepositoryImpl implements SkillRepository {
     @Override
     public void deleteById(Long id) {
         List<Skill> existingSkills = getAllSkills();
-        existingSkills.removeIf(s -> s.getId().equals(id));
+       Skill findSkill = existingSkills .stream()
+                                        .filter(s -> s.getId().equals(id))
+                                        .findFirst().orElse(null);
+       findSkill.setStatus(Status.DELETED);
         writeSkillToFile(existingSkills);
     }
 
     private List<Skill> getAllSkills() {
-        try {
-            BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(
-                            new FileInputStream(Paths.get("").toAbsolutePath() + pathToFile + FILE_NAME),
-                            StandardCharsets.UTF_8));
-            String str = reader
-                    .lines()
-                    .collect(Collectors.joining(System.lineSeparator()));
-
-            Type type = new TypeToken<List<Skill>>() {
-            }.getType();
+        try(FileInputStream fileInputStream = new FileInputStream(Paths.get("").toAbsolutePath() + pathToFile + FILE_NAME)) {
+            String str = new String(fileInputStream.readAllBytes());
+            Type type = new TypeToken<List<Skill>>() {}.getType();
             return GSON.fromJson(str, type);
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             return Collections.emptyList();
         }

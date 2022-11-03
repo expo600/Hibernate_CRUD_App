@@ -19,4 +19,8 @@ public class Specialty {
         this.name = name;
         this.status = status;
     }
+
+    public Specialty() {
+
+    }
 }

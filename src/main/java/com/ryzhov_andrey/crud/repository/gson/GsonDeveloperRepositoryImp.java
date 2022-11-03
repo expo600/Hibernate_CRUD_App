@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ryzhov_andrey.crud.model.Developer;
 import com.ryzhov_andrey.crud.model.Specialty;
+import com.ryzhov_andrey.crud.model.Status;
 import com.ryzhov_andrey.crud.repository.DeveloperRepository;
 
 import java.io.*;
@@ -46,10 +47,11 @@ public class GsonDeveloperRepositoryImp implements DeveloperRepository {
         List<Developer> existingDevelopers = getAllDevelopers();
         existingDevelopers.forEach(existingDeveloper -> {
             if(existingDeveloper.getId().equals(developer.getId())) {
-                existingDeveloper.setName(developer.getName());
+                existingDeveloper.setFirstname(developer.getFirstname());
                 existingDeveloper.setLastName(developer.getLastName());
                 existingDeveloper.setSkills(developer.getSkills());
                 existingDeveloper.setSpecialty(developer.getSpecialty());
+                existingDeveloper.setStatus(Status.ACTIVE);
             }
         });
         writeDeveloperToFile(existingDevelopers);
@@ -59,24 +61,20 @@ public class GsonDeveloperRepositoryImp implements DeveloperRepository {
     @Override
     public void deleteById(Long id) {
         List<Developer> existingDevelopers = getAllDevelopers();
-        existingDevelopers.removeIf(s -> s.getId().equals(id));
+        Developer findDeveloper = existingDevelopers.stream()
+                                                    .filter(s -> s.getId().equals(id))
+                                                    .findFirst().orElse(null);
+        findDeveloper.setStatus(Status.DELETED);
         writeDeveloperToFile(existingDevelopers);
 
     }
 
     private List<Developer> getAllDevelopers() {
-        try {
-            BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(
-                            new FileInputStream(Paths.get("").toAbsolutePath() + pathToFile + FILE_NAME),
-                            StandardCharsets.UTF_8));
-            String str = reader
-                    .lines()
-                    .collect(Collectors.joining(System.lineSeparator()));
-
-            Type type = new TypeToken<List<Specialty>>() {}.getType();
+        try(FileInputStream fileInputStream = new FileInputStream(Paths.get("").toAbsolutePath() + pathToFile + FILE_NAME)) {
+            String str = new String(fileInputStream.readAllBytes());
+            Type type = new TypeToken<List<Developer>>() {}.getType();
             return GSON.fromJson(str, type);
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             return Collections.emptyList();
         }

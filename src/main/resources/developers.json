@@ -1,0 +1,5 @@
+[
+  {"id":1,"firstname":"Aa","lastName":"AA","skills":[{"id":3,"name":"C","status":"ACTIVE"}],"specialty":{"id":2,"name":"BBB","status":"ACTIVE"},"status":"ACTIVE"},
+  {"id":2,"firstname":"Bb","lastName":"BB","skills":[{"id":3,"name":"C","status":"ACTIVE"}],"specialty":{"id":2,"name":"BBB","status":"ACTIVE"},"status":"ACTIVE"},
+  {"id":3,"firstname":"Cc","lastName":"CC","skills":[{"id":1,"name":"A","status":"ACTIVE"},{"id":5,"name":"E","status":"ACTIVE"}],"specialty":{"id":2,"name":"BBB","status":"ACTIVE"},"status":"ACTIVE"}
+]

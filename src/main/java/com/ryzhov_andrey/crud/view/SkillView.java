@@ -1,9 +1,13 @@
 package com.ryzhov_andrey.crud.view;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.ryzhov_andrey.crud.controller.SkillController;
 import com.ryzhov_andrey.crud.model.Skill;
+import com.ryzhov_andrey.crud.model.Specialty;
 import com.ryzhov_andrey.crud.model.Status;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class SkillView extends BaseView {
@@ -17,44 +21,62 @@ public class SkillView extends BaseView {
     private String line = "----------------------------------------------";
     private final Scanner scanner = new Scanner(System.in);
     private final SkillController skillController = new SkillController();
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
 
     @Override
     public void create()  {
+        System.out.println(line);
         System.out.println("Enter skill name: ");
-        String name = scanner.nextLine();
-
+        String name = scanner.next();
         Skill createdSkill = null;
         try {
-            createdSkill = skillController.createSkill(name);
+            createdSkill = skillController.createSkill(name,Status.ACTIVE);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        createdSkill.setStatus(Status.ACTIVE);
-        System.out.println("Created skill: " + createdSkill);
-
+        System.out.println("Created skill: \n" + GSON.toJson(createdSkill));
     }
 
     @Override
     void edit() {
-
+        System.out.println(line);
+        System.out.println("Edit skill\n" + "Enter ID: ");
+        Long id = scanner.nextLong();
+        System.out.println("Enter skill name: ");
+        String name = scanner.next();
+        Skill updatedSkill = skillController.updateSkill(id, name,Status.ACTIVE);
+        System.out.println("Successful operation");
+        System.out.println("Updated skill: \n" + GSON.toJson(updatedSkill));
     }
 
     @Override
     void delete() {
-
+        System.out.println(line);
+        System.out.println("Delete skill\n" + "Enter ID: " );
+        Long id = scanner.nextLong();
+      Skill deleteSkill = skillController.getSkillById(id);
+        try {
+            skillController.deleteSkill(id);
+            System.out.println("Successful operation");
+            System.out.println("Deleted skill: \n" + GSON.toJson(deleteSkill));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Error!");
+        }
     }
 
     @Override
     void print() {
-
+        System.out.println("List of skills: ");
+        List<Skill> skills = skillController.getAllSkills();
+        System.out.println(GSON.toJson(skills));
     }
 
     @Override
     void show() {
         boolean isExit = false;
         while (true) {
-            print();
             System.out.println(line);
             System.out.println(createMenuMessage);
             System.out.println(line);
@@ -85,6 +107,5 @@ public class SkillView extends BaseView {
         }
         scanner.close();
     }
-
 
 }

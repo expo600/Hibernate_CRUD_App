@@ -2,7 +2,9 @@ package com.ryzhov_andrey.crud.repository.gson;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.ryzhov_andrey.crud.model.Skill;
 import com.ryzhov_andrey.crud.model.Specialty;
+import com.ryzhov_andrey.crud.model.Status;
 import com.ryzhov_andrey.crud.repository.SpecialtyRepository;
 
 import java.io.*;
@@ -46,6 +48,7 @@ public class GsonSpecialtyRepositoryImp implements SpecialtyRepository {
         existingSpecialties.forEach(existingSpecialty -> {
             if(existingSpecialty.getId().equals(specialty.getId())) {
                 existingSpecialty.setName(specialty.getName());
+                existingSpecialty.setStatus(Status.ACTIVE);
             }
         });
         writeSpecialtyToFile(existingSpecialties);
@@ -55,23 +58,18 @@ public class GsonSpecialtyRepositoryImp implements SpecialtyRepository {
     @Override
     public void deleteById(Long id) {
         List<Specialty> existingSpecialties = getAllSpecialties();
-        existingSpecialties.removeIf(s -> s.getId().equals(id));
+        Specialty findSpecialty = existingSpecialties.stream().filter(s -> s.getId().equals(id))
+                                                              .findFirst().orElse(null);
+        findSpecialty.setStatus(Status.DELETED);
         writeSpecialtyToFile(existingSpecialties);
     }
 
     private List<Specialty> getAllSpecialties() {
-        try {
-            BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(
-                            new FileInputStream(Paths.get("").toAbsolutePath() + pathToFile + FILE_NAME),
-                            StandardCharsets.UTF_8));
-            String str = reader
-                    .lines()
-                    .collect(Collectors.joining(System.lineSeparator()));
-
+        try(FileInputStream fileInputStream = new FileInputStream(Paths.get("").toAbsolutePath() + pathToFile + FILE_NAME)) {
+            String str = new String(fileInputStream.readAllBytes());
             Type type = new TypeToken<List<Specialty>>() {}.getType();
             return GSON.fromJson(str, type);
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             return Collections.emptyList();
         }

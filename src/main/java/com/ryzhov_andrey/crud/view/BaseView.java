@@ -4,7 +4,7 @@ package com.ryzhov_andrey.crud.view;
 public abstract class BaseView {
 
 
-    abstract void create() throws Exception;
+    abstract void create();
 
     abstract void edit();
 
