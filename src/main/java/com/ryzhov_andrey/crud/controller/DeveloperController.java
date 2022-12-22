@@ -5,13 +5,13 @@ import com.ryzhov_andrey.crud.model.Skill;
 import com.ryzhov_andrey.crud.model.Specialty;
 import com.ryzhov_andrey.crud.model.Status;
 import com.ryzhov_andrey.crud.repository.DeveloperRepository;
-import com.ryzhov_andrey.crud.repository.gson.GsonDeveloperRepositoryImp;
+import com.ryzhov_andrey.crud.repository.jdbc.JdbcDeveloperRepositoryImpl;
 
 import java.util.List;
 
 public class DeveloperController {
 
-    private final DeveloperRepository developerRepository = new GsonDeveloperRepositoryImp();
+    private final DeveloperRepository developerRepository = new JdbcDeveloperRepositoryImpl();
 
 
     public Developer createDeveloper(String firstname,

@@ -1,2 +1,6 @@
-package com.ryzhov_andrey.crud.service;public interface SpecialtyService {
+package com.ryzhov_andrey.crud.service;
+
+import com.ryzhov_andrey.crud.model.Specialty;
+
+public interface SpecialtyService extends GenericService<Specialty, Long> {
 }

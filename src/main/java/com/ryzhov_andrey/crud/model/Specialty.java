@@ -9,8 +9,13 @@ public class Specialty {
     private String name;
     private Status status;
 
+
     public Specialty(Long id, String name) {
         this.id = id;
+        this.name = name;
+    }
+
+    public Specialty( String name) {
         this.name = name;
     }
 
@@ -21,6 +26,12 @@ public class Specialty {
     }
 
     public Specialty() {
-
     }
+
+    @Override
+    public String toString() {
+        return "  " + id + " | " + name + " | " + status;
+    }
+
+
 }

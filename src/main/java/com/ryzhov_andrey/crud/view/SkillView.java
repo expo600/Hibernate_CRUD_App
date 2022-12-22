@@ -14,7 +14,7 @@ public class SkillView extends BaseView {
 
     private final String createMenuMessage = "Select action on skill:\n" +
             " 1. Create\n" +
-            " 2. Edit\n" +
+            " 2. Update\n" +
             " 3. Delete\n" +
             " 4. Print\n" +
             " 5. Exit";
@@ -39,7 +39,7 @@ public class SkillView extends BaseView {
     }
 
     @Override
-    void edit() {
+    void update() {
         System.out.println(line);
         System.out.println("Edit skill\n" + "Enter ID: ");
         Long id = scanner.nextLong();
@@ -86,7 +86,7 @@ public class SkillView extends BaseView {
                     create();
                     break;
                 case 2:
-                    edit();
+                    update();
                     break;
                 case 3:
                     delete();

@@ -8,10 +8,12 @@ public interface GenericRepository<T, ID> {
 
     List<T> getAll();
 
-    T save(T t);
+    T create(T t);
 
     T update(T t);
 
     void deleteById(ID id);
+
+    T save(T t);
 
 }

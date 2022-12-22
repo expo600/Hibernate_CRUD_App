@@ -6,7 +6,7 @@ public abstract class BaseView {
 
     abstract void create();
 
-    abstract void edit();
+    abstract void update();
 
     abstract void delete();
 

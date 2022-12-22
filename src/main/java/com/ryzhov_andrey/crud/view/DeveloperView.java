@@ -18,7 +18,7 @@ public class DeveloperView extends BaseView {
 
     private final String createMenuMessage = "Select action on developer:\n" +
             " 1. Create\n" +
-            " 2. Edit\n" +
+            " 2. Update\n" +
             " 3. Delete\n" +
             " 4. Print\n" +
             " 5. Exit";
@@ -47,19 +47,19 @@ public class DeveloperView extends BaseView {
     }
 
     @Override
-    void edit() {
+    void update() {
         System.out.println(line);
         System.out.println("Edit developer\n" + "Enter ID: ");
         Long id = scanner.nextLong();
         System.out.println("Enter developer firstname: ");
-        String firstname = scanner.next();
+        String firstName = scanner.next();
         System.out.println("Enter developer lastname: ");
         String lastName = scanner.next();
         System.out.println("Enter developer skills: ");
         List<Skill> skills = addSkills();
         System.out.println("Enter developer specialty: ");
         Specialty specialty = addSpecialty();
-        Developer deleteDeveloper = developerController.updateDeveloper(id, firstname, lastName, skills,
+        Developer deleteDeveloper = developerController.updateDeveloper(id, firstName, lastName, skills,
                 specialty, Status.ACTIVE);
         System.out.println("Successful operation");
         System.out.println("Edit developer: \n" + GSON.toJson(deleteDeveloper));
@@ -101,7 +101,7 @@ public class DeveloperView extends BaseView {
                     create();
                     break;
                 case 2:
-                    edit();
+                    update();
                     break;
                 case 3:
                     delete();

@@ -3,13 +3,13 @@ package com.ryzhov_andrey.crud.controller;
 import com.ryzhov_andrey.crud.model.Skill;
 import com.ryzhov_andrey.crud.model.Status;
 import com.ryzhov_andrey.crud.repository.SkillRepository;
-import com.ryzhov_andrey.crud.repository.gson.GsonSkillRepositoryImpl;
+import com.ryzhov_andrey.crud.repository.jdbc.JdbcSkillRepositoryImpl;
 
 import java.util.List;
 
 public class SkillController {
 
-    private final SkillRepository skillRepository = new GsonSkillRepositoryImpl();
+    private final SkillRepository skillRepository = new JdbcSkillRepositoryImpl();
 
     public Skill createSkill(String name, Status status)  {
         Skill skill = new Skill(null, name,status);
@@ -17,7 +17,7 @@ public class SkillController {
     }
 
     public Skill updateSkill(Long id,String name,Status status)  {
-        Skill skill = new Skill(id, name, status);
+        Skill skill = new Skill(id, name,status);
         return skillRepository.update(skill);
     }
 
