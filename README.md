@@ -28,7 +28,7 @@ developers.json, skills.json, specialties.json
   
 1.Скачать приложение
 
-2.Перейти в репозиторий по ссылке https://github.com/expo600/Console_CRUD_Application/tree/master
+2.Перейти в репозиторий по ссылке https://github.com/expo600/Console_CRUD_App_02
 
 3.Кликнуть зеленую кнопку "Clone or Download" в правой верхней части страницы.
 
