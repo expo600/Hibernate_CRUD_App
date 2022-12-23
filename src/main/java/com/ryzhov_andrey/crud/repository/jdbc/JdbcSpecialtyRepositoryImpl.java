@@ -124,17 +124,6 @@ public class JdbcSpecialtyRepositoryImpl implements SpecialtyRepository {
             e.printStackTrace();
         }
     }
-
-    @Override
-    public Specialty save(Specialty specialty) {
-        try {
-            statement.executeUpdate(String.format(SPECIALTY_SAVE, specialty.getId(), specialty.getName(), specialty.getStatus()));
-
-        }catch (SQLException e) {
-
-        }
-        return specialty;
-    }
 }
 
 

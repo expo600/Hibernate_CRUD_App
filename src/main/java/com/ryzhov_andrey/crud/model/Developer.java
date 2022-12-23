@@ -8,7 +8,7 @@ import java.util.List;
 public class Developer {
 
     private Long id;
-    private String firstname;
+    private String firstName;
     private String lastName;
     private List<Skill> skills;
     private Specialty specialty;
@@ -18,7 +18,7 @@ public class Developer {
     public Developer(Long id, String firstName, String lastName,
                      List<Skill> skills, Specialty specialty) {
         this.id = id;
-        this.firstname = firstName;
+        this.firstName = firstName;
         this.lastName = lastName;
         this.skills = skills;
         this.specialty = specialty;
@@ -27,7 +27,23 @@ public class Developer {
     public Developer(Long id, String firstName, String lastName,
                      List<Skill> skills, Specialty specialty, Status status) {
         this.id = id;
-        this.firstname = firstName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.skills = skills;
+        this.specialty = specialty;
+        this.status = status;
+    }
+
+    public Developer() {
+    }
+
+    public Developer(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public Developer(String firstName, String lastName, List<Skill> skills, Specialty specialty, Status status) {
+        this.firstName = firstName;
         this.lastName = lastName;
         this.skills = skills;
         this.specialty = specialty;
@@ -43,7 +59,7 @@ public class Developer {
             postBuilder.append(skill.getName()).append(" | ");
         }
 
-        return "  " + id + " | " + firstname + " | " + lastName +
+        return "  " + id + " | " + firstName + " | " + lastName +
                 " | " + postBuilder + " | " + specialty.getName() + " | " + status;
 
     }

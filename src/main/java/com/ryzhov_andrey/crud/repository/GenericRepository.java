@@ -14,6 +14,4 @@ public interface GenericRepository<T, ID> {
 
     void deleteById(ID id);
 
-    T save(T t);
-
 }

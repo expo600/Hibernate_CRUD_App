@@ -13,7 +13,7 @@ public class SpecialtyController {
 
     public Specialty createSpecialty(String name, Status status) {
         Specialty specialty = new Specialty(null, name, status);
-        return specialtyRepository.save(specialty);
+        return specialtyRepository.create(specialty);
     }
 
     public Specialty updateSpecialty(Long id, String name, Status status) {

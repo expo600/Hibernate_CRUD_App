@@ -125,15 +125,4 @@ public class JdbcSkillRepositoryImpl implements SkillRepository {
             e.printStackTrace();
         }
     }
-
-    @Override
-    public Skill save(Skill skill) {
-        try {
-            statement.executeUpdate(String.format(SKILL_SAVE, skill.getId(), skill.getName(), skill.getStatus()));
-
-        }catch (SQLException e) {
-
-        }
-        return skill;
-    }
 }

@@ -13,7 +13,7 @@ public class SkillController {
 
     public Skill createSkill(String name, Status status)  {
         Skill skill = new Skill(null, name,status);
-        return skillRepository.save(skill);
+        return skillRepository.create(skill);
     }
 
     public Skill updateSkill(Long id,String name,Status status)  {

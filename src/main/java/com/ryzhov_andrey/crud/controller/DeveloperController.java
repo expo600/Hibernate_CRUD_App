@@ -20,7 +20,7 @@ public class DeveloperController {
                                      Specialty specialty,
                                      Status status) {
         Developer developer = new Developer(null, firstname, lastName, skills, specialty, status);
-        return developerRepository.save(developer);
+        return developerRepository.create(developer);
     }
 
     public Developer updateDeveloper(Long id,
