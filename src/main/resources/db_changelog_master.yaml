@@ -1,7 +1,7 @@
 databaseChangeLog:
   - include:
-      file: migrations/tablesDB.sql
+      file: resources/tablesDB.sql
       relativeToChangelogFile: true
   - include:
-      file: migrations/populateDB.sql
+      file: resources/populateDB.sql
       relativeToChangelogFile: true

@@ -9,6 +9,7 @@ import java.util.List;
 
 public class SkillServiceImpl implements SkillService {
 
+
     private final SkillRepository skillRepository;
 
     public SkillServiceImpl() {
