@@ -8,8 +8,6 @@
 * Specialty
 * Status (enum ACTIVE, DELETED)
   
-Developer -> List<Skill> skills + Specialty specialty
-
 Каждая сущность имеет поле Status. 
 В момент удаления, мы не удаляем запись из файла, а меняем её статус на DELETED.
 
