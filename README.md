@@ -32,14 +32,16 @@ Java, MySQL, JDBC, Maven, Liquibase, JUnit, Mockito
 
 # Инструкция по запуску:
   
-1.Скачать приложение
+1.Перейти в репозиторий по ссылке https://github.com/expo600/Console_CRUD_App_02
 
-2.Перейти в репозиторий по ссылке https://github.com/expo600/Console_CRUD_App_02
+2.Кликнуть зеленую кнопку "Clone or Download" в правой верхней части страницы.
 
-3.Кликнуть зеленую кнопку "Clone or Download" в правой верхней части страницы.
-
-4.Распаковать архиватором
+3.Скачать приложение  
+  
+4.Распаковать архиватором 
 
 5.Открыть проект в intellij idea
+  
+6. Подключить свою базу данных 
 
-6.Запустить класс main.java.com.ryzhov_andrey.crud.Application.java
+7.Запустить класс main.java.com.ryzhov_andrey.crud.Application.java
