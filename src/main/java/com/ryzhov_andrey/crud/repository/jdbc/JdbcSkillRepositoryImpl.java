@@ -63,7 +63,7 @@ public class JdbcSkillRepositoryImpl implements SkillRepository {
         Skill sk = new Skill();
         try {
 
-            if (statement.executeUpdate(String.format(SKILL_CREATE, skill.getName(), "Active")) > 0) {
+            if (statement.executeUpdate(String.format(SKILL_CREATE, skill.getName(), "ACTIVE")) > 0) {
 
                 resultSet = statement.executeQuery(RESULT_SKILL_CREATE);
 
@@ -114,7 +114,7 @@ public class JdbcSkillRepositoryImpl implements SkillRepository {
     public void deleteById(Long id) {
         try {
 
-            if (statement.executeUpdate(String.format(SKILL_DELETE, id)) > 0) {
+            if (statement.executeUpdate(String.format(SKILL_DELETE_BY_ID, id)) > 0) {
 
                 System.out.println(" Skill removed ...");
             } else {

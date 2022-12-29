@@ -62,7 +62,7 @@ public class JdbcSpecialtyRepositoryImpl implements SpecialtyRepository {
         Specialty spec = new Specialty();
         try {
 
-            if (statement.executeUpdate(String.format(SPECIALTY_CREATE, specialty.getName(), "Active")) > 0) {
+            if (statement.executeUpdate(String.format(SPECIALTY_CREATE, specialty.getName(), "ACTIVE")) > 0) {
 
                 resultSet = statement.executeQuery(RESULT_SPECIALTY_CREATE);
 
@@ -113,7 +113,7 @@ public class JdbcSpecialtyRepositoryImpl implements SpecialtyRepository {
     public void deleteById(Long id) {
         try {
 
-            if (statement.executeUpdate(String.format(SPECIALTY_DELETE, id)) > 0) {
+            if (statement.executeUpdate(String.format(SPECIALTY_DELETE_BY_ID, id)) > 0) {
 
                 System.out.println(" Specialty removed ...");
             } else {

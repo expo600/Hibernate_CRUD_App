@@ -5,7 +5,7 @@ import com.ryzhov_andrey.crud.repository.SkillRepository;
 import com.ryzhov_andrey.crud.repository.jdbc.JdbcSkillRepositoryImpl;
 import com.ryzhov_andrey.crud.service.SkillService;
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Spy;
@@ -13,10 +13,11 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
 
-import static junit.framework.TestCase.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
+
 
 @RunWith(MockitoJUnitRunner.class)
 class SkillServiceImplTest {
