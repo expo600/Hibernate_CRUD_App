@@ -73,19 +73,15 @@
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-maven-plugin</artifactId>
                 <version>3.6.1</version>
-                <executions>
-                    <execution>
-                        <phase>process-resources</phase>
-                        <configuration>
-                            <propertyFile>src/main/resources/liquibase.properties</propertyFile>
-                            <changeLogFile>src/main/resources/db_changelog_master.yaml</changeLogFile>
-                            <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
-                        </configuration>
-                        <goals>
-                            <goal>update</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <configuration>
+                    <changeLogFile>src/main/resources/db_changelog_master.yaml</changeLogFile>
+                    <url>jdbc:mysql://localhost:3306/developers_database</url>
+                    <username>root</username>
+                    <password>1234</password>
+                </configuration>
+                <goals>
+                    <goal>update</goal>
+                </goals>
             </plugin>
         </plugins>
     </build>

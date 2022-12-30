@@ -10,6 +10,10 @@ import java.util.List;
 public class DeveloperServiceImpl implements DeveloperService {
     private final DeveloperRepository developerRepository;
 
+    public DeveloperServiceImpl(DeveloperRepository developerRepository) {
+        this.developerRepository = developerRepository;
+    }
+
     public DeveloperServiceImpl() {
         this.developerRepository = new JdbcDeveloperRepositoryImpl();
     }

@@ -14,12 +14,11 @@ public class SpecialtyView extends BaseView {
             " 1. Create\n" +
             " 2. Update\n" +
             " 3. Delete\n" +
-            " 4. Print\n" +
+            " 4. GetAll\n" +
             " 5. Exit";
     private String line = "----------------------------------------------";
     private final Scanner scanner = new Scanner(System.in);
     private final SpecialtyController specialtyController = new SpecialtyController();
-    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     @Override
     public void create() {
@@ -32,19 +31,20 @@ public class SpecialtyView extends BaseView {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("Created specialty: \n" + GSON.toJson(createdSpecialty));
+        System.out.println("Created specialty ...");
+        System.out.println("Successful operation");
     }
 
     @Override
     void update() {
         System.out.println(line);
-        System.out.println("Edit specialty\n" + "Enter ID: ");
+        System.out.println("Update specialty\n" + "Enter ID: ");
         Long id = scanner.nextLong();
         System.out.println("Enter specialty name: ");
         String name = scanner.next();
         Specialty updateSpecialty = specialtyController.updateSpecialty(id, name,Status.ACTIVE);
+        System.out.println("Updated specialty ...");
         System.out.println("Successful operation");
-        System.out.println("Updated skill: \n" + GSON.toJson(updateSpecialty));
     }
 
     @Override
@@ -55,8 +55,8 @@ public class SpecialtyView extends BaseView {
         Specialty deleteSpecialty = specialtyController.getSpecialtyById(id);
         try {
             specialtyController.deleteSpecialty(id);
+            System.out.println("Deleted specialty ...");
             System.out.println("Successful operation");
-            System.out.println("Deleted skill: \n" + GSON.toJson(deleteSpecialty));
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Error!");
@@ -68,7 +68,9 @@ public class SpecialtyView extends BaseView {
     void print() {
         System.out.println("List of specialties: ");
         List<Specialty> specialties = specialtyController.getAllSpecialties();
-        System.out.println(GSON.toJson(specialties));
+        System.out.println(" ID | SPECIALTY | STATUS | \n");
+
+        specialties.forEach((r) -> System.out.println(r.toString()));
     }
 
     @Override

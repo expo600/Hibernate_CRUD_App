@@ -16,12 +16,11 @@ public class SkillView extends BaseView {
             " 1. Create\n" +
             " 2. Update\n" +
             " 3. Delete\n" +
-            " 4. Print\n" +
+            " 4. GetAll\n" +
             " 5. Exit";
     private String line = "----------------------------------------------";
     private final Scanner scanner = new Scanner(System.in);
     private final SkillController skillController = new SkillController();
-    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
 
     @Override
@@ -35,7 +34,8 @@ public class SkillView extends BaseView {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("Created skill: \n" + GSON.toJson(createdSkill));
+        System.out.println("Created skill ...");
+        System.out.println("Successful operation");
     }
 
     @Override
@@ -46,8 +46,8 @@ public class SkillView extends BaseView {
         System.out.println("Enter skill name: ");
         String name = scanner.next();
         Skill updatedSkill = skillController.updateSkill(id, name,Status.ACTIVE);
+        System.out.println("Updated skill ...");
         System.out.println("Successful operation");
-        System.out.println("Updated skill: \n" + GSON.toJson(updatedSkill));
     }
 
     @Override
@@ -58,8 +58,8 @@ public class SkillView extends BaseView {
       Skill deleteSkill = skillController.getSkillById(id);
         try {
             skillController.deleteSkill(id);
+            System.out.println("Deleted skill ...");
             System.out.println("Successful operation");
-            System.out.println("Deleted skill: \n" + GSON.toJson(deleteSkill));
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Error!");
@@ -70,7 +70,9 @@ public class SkillView extends BaseView {
     void print() {
         System.out.println("List of skills: ");
         List<Skill> skills = skillController.getAllSkills();
-        System.out.println(GSON.toJson(skills));
+        System.out.println(" ID | SKILL | STATUS | \n");
+
+        skills.forEach((r) -> System.out.println(r.toString()));
     }
 
     @Override

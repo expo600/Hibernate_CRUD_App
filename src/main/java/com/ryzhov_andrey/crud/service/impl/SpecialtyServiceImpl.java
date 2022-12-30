@@ -10,6 +10,10 @@ import java.util.List;
 public class SpecialtyServiceImpl implements SpecialtyService {
     private final SpecialtyRepository specialtyRepository;
 
+    public SpecialtyServiceImpl(SpecialtyRepository specialtyRepository) {
+        this.specialtyRepository = specialtyRepository;
+    }
+
     public SpecialtyServiceImpl() {
         this.specialtyRepository = new JdbcSpecialtyRepositoryImpl();
     }

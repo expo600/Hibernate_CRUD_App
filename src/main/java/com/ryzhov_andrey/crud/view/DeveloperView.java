@@ -20,14 +20,13 @@ public class DeveloperView extends BaseView {
             " 1. Create\n" +
             " 2. Update\n" +
             " 3. Delete\n" +
-            " 4. Print\n" +
+            " 4. GetAll\n" +
             " 5. Exit";
     private String line = "----------------------------------------------";
     private final Scanner scanner = new Scanner(System.in);
     private final DeveloperController developerController = new DeveloperController();
     private final SkillController skillController = new SkillController();
     private final SpecialtyController specialtyController = new SpecialtyController();
-    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     @Override
     void create() {
@@ -42,7 +41,7 @@ public class DeveloperView extends BaseView {
         Specialty specialty = addSpecialty();
         Developer createdDeveloper = developerController.createDeveloper(firstName, lastName,
                 skills, specialty, Status.ACTIVE);
-        System.out.println("Created developer: \n" + GSON.toJson(createdDeveloper));
+        System.out.println("Created developer ...");
 
     }
 
@@ -61,8 +60,8 @@ public class DeveloperView extends BaseView {
         Specialty specialty = addSpecialty();
         Developer deleteDeveloper = developerController.updateDeveloper(id, firstName, lastName, skills,
                 specialty, Status.ACTIVE);
+        System.out.println("Update developer ...");
         System.out.println("Successful operation");
-        System.out.println("Edit developer: \n" + GSON.toJson(deleteDeveloper));
     }
 
     @Override
@@ -73,8 +72,8 @@ public class DeveloperView extends BaseView {
         Developer deletedDeveloper = developerController.getDeveloperById(id);
         try {
             developerController.deleteDeveloper(id);
+            System.out.println("Deleted developer ...");
             System.out.println("Successful operation");
-            System.out.println("Deleted developer: \n" + GSON.toJson(deletedDeveloper));
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Error!");
@@ -85,7 +84,9 @@ public class DeveloperView extends BaseView {
     void print() {
         System.out.println("List of developers: ");
         List<Developer> developers = developerController.getAllDevelopers();
-        System.out.println(GSON.toJson(developers));
+        System.out.println(" ID |  NAME  |  LASTNAME  |   SKILL  |   SPECIALTY   |\n");
+
+        developers.forEach((w) -> System.out.println((w.toString())));
     }
 
     @Override
