@@ -84,7 +84,7 @@ public class DeveloperView extends BaseView {
     void print() {
         System.out.println("List of developers: ");
         List<Developer> developers = developerController.getAllDevelopers();
-        System.out.println(" ID |  NAME  |  LASTNAME  |   SKILL  |   SPECIALTY   |\n");
+        System.out.println(" ID |  NAME  |  LASTNAME  |  SKILL  |   SPECIALTY  | STATUS |\n");
 
         developers.forEach((w) -> System.out.println((w.toString())));
     }

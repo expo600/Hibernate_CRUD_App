@@ -47,10 +47,8 @@ public class JdbcUtils {
     //TODO: merge 2 queries into 1
     // for  Developer
     public static final String DEVELOPER_GET_BY_ID =
-            "SELECT d.id,d.first_name,d.last_name,s.specialty_name,d.status_name" +
-                    "FROM developers d " +
-                    "LEFT JOIN specialties s on d.specialty_id = s.id " +
-                    "where d.id = %d;";
+            "SELECT d.id,d.first_name,d.last_name,s.specialty_name,d.status_name " +
+                    "FROM developers d LEFT JOIN specialties s ON d.specialty_id = s.id WHERE d.id = %d;";
 
 
     public static final String DEVELOPER_DELETE_BY_ID =
@@ -58,10 +56,12 @@ public class JdbcUtils {
 
 
     public static final String DEVELOPER_GET_ALL =
-            "SELECT d.id,d.first_name,d.last_name,s.skill_name,sp.specialty_name,d.status_name FROM developers d" +
-                    "LEFT JOIN developer_skills ds ON d.id = ds.developer_id" +
-                    "LEFT JOIN skills s ON s.id = ds.skill_id" +
-                    "LEFT JOIN specialties sp ON d.specialty_id = sp.id WHERE d.status_name = '%s';";
+            " SELECT d.id,d.first_name,d.last_name,sp.specialty_name,d.status_name FROM developers d " +
+                    "LEFT JOIN specialties sp ON d.specialty_id = sp.id WHERE d.status_name = 'Active';";
+//            "SELECT d.id, d.first_name, d.last_name, s.skill_name,sp.specialty_name,d.status_name FROM developers d" +
+//                    "LEFT JOIN developer_skills ds ON d.id = ds.developer_id" +
+//                    "LEFT JOIN skills s ON s.id = ds.skill_id" +
+//                    "LEFT JOIN specialties sp ON d.specialty_id = sp.id WHERE d.status_name = 'Active';";
 
     public static final String DEVELOPER_CREATE =
             "INSERT INTO developers_database.developers (first_name, last_name, specialty_id, status_name)" +
@@ -69,12 +69,18 @@ public class JdbcUtils {
 
 
     public static final String DEVELOPER_CREATE_IN_SKILLS =
-            "INSERT INTO developers_database.developer_skills (developer_id ,skill_id) VALUES(%d, %d);";
+            "INSERT INTO developers_database.developer_skills (developer_id ,skill_id) VALUES((select max(id) from developers), %d);";
 
 
     public static final String DEVELOPER_UPDATE =
             "UPDATE developers_database.developers SET" +
-                    "(first_name = '%s', last_name='%s', specialty_id= %d, status_name='%s') WHERE id = %d ;";
+                    "(first_name = '%s', last_name = '%s', specialty_id = %d, status_name = '%s') WHERE id = %d ;";
+
+    public static final String DEVELOPER_UPDATE_IN_SKILLS =
+            "UPDATE developers_database.developer_skills SET skill_id = '%s' WHERE developer_id = %d);";
+
+    public static final String RESULT_DEVELOPER_UPDATE =
+            "SELECT * FROM developers WHERE id = %d ;";
 
     // for  Skill ============================================================================================
 

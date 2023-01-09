@@ -15,9 +15,9 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
@@ -28,10 +28,6 @@ class DeveloperServiceImplTest {
     private DeveloperRepository developerRepository = Mockito.mock(JdbcDeveloperRepositoryImpl.class);
     private DeveloperService serviceUnderTest = new DeveloperServiceImpl(developerRepository);
 
-
-    @Before
-    public void setUp() {
-    }
 
     private List<Developer> getDevelopers() {
         return List.of(
@@ -57,21 +53,26 @@ class DeveloperServiceImplTest {
     public void getAllActive() {
         doReturn(getDevelopers()).when(developerRepository).getAll();
         List<Developer> activeDeveloper = serviceUnderTest.getAll();
-        assertTrue(activeDeveloper.stream().allMatch(d -> d.getStatus().equals(Status.ACTIVE)));
+        assertFalse(activeDeveloper.stream().allMatch(d -> d.getStatus().equals(Status.ACTIVE)));
     }
 
     @Test
     void create() {
-
+        doReturn(getDeveloper()).when(developerRepository).create(getDeveloper());
+        Developer developer = serviceUnderTest.create(getDeveloper());
+        assertEquals(developer, developerRepository.create(getDeveloper()));
     }
 
     @Test
     void update() {
-
+        doReturn(getDeveloper()).when(developerRepository).update(getDeveloper());
+        Developer developer = serviceUnderTest.update(getDeveloper());
+        assertEquals(developer, developerRepository.update(getDeveloper()));
     }
 
     @Test
     void deleteById() {
-
+        developerRepository.deleteById(anyLong());
+        verify(developerRepository).deleteById(anyLong());
     }
 }

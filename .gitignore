@@ -1,5 +1,4 @@
 .idea/*
-target/*
 
 *.class
 *.war
@@ -7,3 +6,5 @@ target/*
 *.ear
 *.rar
 *.txt
+
+/target

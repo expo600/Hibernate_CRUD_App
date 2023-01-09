@@ -59,7 +59,6 @@ public class JdbcDeveloperRepositoryImpl implements DeveloperRepository {
 
     @Override
     public Developer create(Developer developer) {
-        Developer dev = new Developer();
         try (Statement statement = JdbcUtils.getStatement()) {
 
             statement.executeUpdate(String.format(DEVELOPER_CREATE,
@@ -69,7 +68,7 @@ public class JdbcDeveloperRepositoryImpl implements DeveloperRepository {
                     "Active"));
 
         for (Skill s : developer.getSkills()) {
-            statement.executeUpdate(String.format(DEVELOPER_CREATE_IN_SKILLS, developer.getId(), s.getId()));
+            statement.executeUpdate(String.format(DEVELOPER_CREATE_IN_SKILLS, s.getId()));
         }
 
         } catch (SQLException e) {
@@ -88,16 +87,16 @@ public class JdbcDeveloperRepositoryImpl implements DeveloperRepository {
                     developer.getSpecialty().getId(),
                     "Active",
                     developer.getId()));
-
+// удалить скиллы старого девелопера
             for (Skill s : developer.getSkills()) {
-                statement.execute(String.format(DEVELOPER_CREATE_IN_SKILLS, developer.getId(), s.getId()));
+                statement.executeUpdate(String.format(DEVELOPER_UPDATE_IN_SKILLS, s.getId(),developer.getId()));
             }
-            ResultSet resultSet = statement.executeQuery(String.format(DEVELOPER_UPDATE));
+           ResultSet resultSet = statement.executeQuery(String.format(RESULT_DEVELOPER_UPDATE));
 
             while (resultSet.next()) {
                 dev = convertResultSetToDeveloper(resultSet);
             }
-            resultSet.close();
+           resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
