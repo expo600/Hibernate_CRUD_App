@@ -53,7 +53,7 @@ class SpecialtyServiceImplTest {
     void getAll() {
         doReturn(getSpecialties()).when(specialtyRepository).getAll();
         List<Specialty> activeSpecialty = serviceUnderTest.getAll();
-        assertFalse(activeSpecialty.stream().allMatch(d -> d.getStatus().equals(Status.ACTIVE)));
+        assertTrue(activeSpecialty.stream().anyMatch(d -> d.getStatus().equals(Status.ACTIVE)));
     }
 
     @Test

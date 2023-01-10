@@ -20,6 +20,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -60,7 +61,7 @@ class SkillServiceImplTest {
     void getAll() {
         doReturn(getSkills()).when(skillRepository).getAll();
         List<Skill> activeSkill = serviceUnderTest.getAll();
-        assertFalse(activeSkill.stream().allMatch(d -> d.getStatus().equals(Status.ACTIVE)));
+        assertTrue(activeSkill.stream().anyMatch(d -> d.getStatus().equals(Status.ACTIVE)));
     }
 
     @Test

@@ -60,7 +60,7 @@ public class Developer {
         }
 
         return "  " + id + " | " + firstName + " | " + lastName +
-                " | " + postBuilder + " | " + specialty.getName() + " | " + status;
+                " | " + postBuilder + "  " + specialty.getName() + "  | " + status;
 
     }
 }

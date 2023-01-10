@@ -30,8 +30,8 @@ public class JdbcDeveloperRepositoryImpl implements DeveloperRepository {
     @Override
     public Developer getById(Long id) {
         Developer developer = null;
-        try (Statement statement = JdbcUtils.getStatement()){
-            ResultSet resultSet = statement.executeQuery(String.format(DEVELOPER_GET_BY_ID,id));
+        try (Statement statement = JdbcUtils.getStatement()) {
+            ResultSet resultSet = statement.executeQuery(String.format(DEVELOPER_GET_BY_ID, id));
             while (resultSet.next()) {
                 developer = convertResultSetToDeveloper(resultSet);
             }
@@ -45,12 +45,53 @@ public class JdbcDeveloperRepositoryImpl implements DeveloperRepository {
     @Override
     public List<Developer> getAll() {
         List<Developer> developerList = new ArrayList<>();
+        List<Skill> skillList = new ArrayList<>();
+
+        // для отслеживания повторных ID
+        Set<Long> idSet = new HashSet<>();
+        List<Long> idList = new LinkedList<>();
+
         try (Statement statement = JdbcUtils.getStatement()) {
-            ResultSet resultSet = statement.executeQuery(String.format(DEVELOPER_GET_ALL,"Active"));
+            ResultSet resultSet = statement.executeQuery(String.format(DEVELOPER_GET_ALL, "Active"));
             while (resultSet.next()) {
-                developerList.add(convertResultSetToDeveloper(resultSet));
+
+                Developer developer = new Developer();
+
+                // одноразовый лист скиллов
+                List<Skill> skills = new ArrayList<>();
+
+                // поиск двух или нескольких скиллов у одного разраба
+                if (idSet.add(resultSet.getLong(1))) {
+
+                    idList.add(resultSet.getLong(1));
+                    skillList.add(new Skill(resultSet.getString(4)));
+                    skills.add(new Skill(resultSet.getString(4)));
+
+                    developer = new Developer(resultSet.getLong(1),
+                                              resultSet.getString(2),
+                                              resultSet.getString(3),
+                                              skills,
+                                new Specialty(resultSet.getString(5)),
+                            Status.valueOf(resultSet.getString(6).toUpperCase(Locale.ENGLISH)));
+
+                    developerList.add(developer);
+                } else {
+                    int indexDuplicateId = idList.indexOf(resultSet.getLong(1));
+
+                    skills.add(skillList.get(indexDuplicateId));
+                    skills.add(new Skill(resultSet.getString(4)));
+
+                    developer = new Developer(resultSet.getLong(1),
+                                              resultSet.getString(2),
+                                              resultSet.getString(3),
+                                              skills,
+                            new Specialty(resultSet.getString(5)),
+                            Status.valueOf(resultSet.getString(6).toUpperCase(Locale.ENGLISH)));
+                    developerList.set(indexDuplicateId, developer);
+                }
             }
             resultSet.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -60,17 +101,14 @@ public class JdbcDeveloperRepositoryImpl implements DeveloperRepository {
     @Override
     public Developer create(Developer developer) {
         try (Statement statement = JdbcUtils.getStatement()) {
-
             statement.executeUpdate(String.format(DEVELOPER_CREATE,
                     developer.getFirstName(),
                     developer.getLastName(),
                     developer.getSpecialty().getId(),
                     "Active"));
-
-        for (Skill s : developer.getSkills()) {
-            statement.executeUpdate(String.format(DEVELOPER_CREATE_IN_SKILLS, s.getId()));
-        }
-
+            for (Skill s : developer.getSkills()) {
+                statement.executeUpdate(String.format(DEVELOPER_CREATE_IN_SKILLS, s.getId()));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -79,7 +117,6 @@ public class JdbcDeveloperRepositoryImpl implements DeveloperRepository {
 
     @Override
     public Developer update(Developer developer) {
-        Developer dev = new Developer();
         try (Statement statement = JdbcUtils.getStatement()) {
             statement.executeUpdate(String.format(DEVELOPER_UPDATE,
                     developer.getFirstName(),
@@ -87,20 +124,16 @@ public class JdbcDeveloperRepositoryImpl implements DeveloperRepository {
                     developer.getSpecialty().getId(),
                     "Active",
                     developer.getId()));
-// удалить скиллы старого девелопера
-            for (Skill s : developer.getSkills()) {
-                statement.executeUpdate(String.format(DEVELOPER_UPDATE_IN_SKILLS, s.getId(),developer.getId()));
-            }
-           ResultSet resultSet = statement.executeQuery(String.format(RESULT_DEVELOPER_UPDATE));
 
-            while (resultSet.next()) {
-                dev = convertResultSetToDeveloper(resultSet);
+            statement.executeUpdate(String.format(DEVELOPER_DELETE_SKILLS, developer.getId()));
+
+            for (Skill s : developer.getSkills()) {
+                statement.executeUpdate(String.format(DEVELOPER_UPDATE_IN_SKILLS, developer.getId(), s.getId()));
             }
-           resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return dev;
+        return developer;
     }
 
     @Override

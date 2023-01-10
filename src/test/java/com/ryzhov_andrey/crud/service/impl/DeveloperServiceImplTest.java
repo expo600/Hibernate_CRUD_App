@@ -53,7 +53,7 @@ class DeveloperServiceImplTest {
     public void getAllActive() {
         doReturn(getDevelopers()).when(developerRepository).getAll();
         List<Developer> activeDeveloper = serviceUnderTest.getAll();
-        assertFalse(activeDeveloper.stream().allMatch(d -> d.getStatus().equals(Status.ACTIVE)));
+        assertTrue(activeDeveloper.stream().anyMatch(d -> d.getStatus().equals(Status.ACTIVE)));
     }
 
     @Test
