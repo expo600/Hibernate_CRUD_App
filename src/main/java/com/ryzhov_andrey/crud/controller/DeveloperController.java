@@ -5,13 +5,14 @@ import com.ryzhov_andrey.crud.model.Skill;
 import com.ryzhov_andrey.crud.model.Specialty;
 import com.ryzhov_andrey.crud.model.Status;
 import com.ryzhov_andrey.crud.repository.DeveloperRepository;
-import com.ryzhov_andrey.crud.repository.jdbc.JdbcDeveloperRepositoryImpl;
+import com.ryzhov_andrey.crud.repository.impl.DeveloperRepositoryImpl;
+
 
 import java.util.List;
 
 public class DeveloperController {
 
-    private final DeveloperRepository developerRepository = new JdbcDeveloperRepositoryImpl();
+    private final DeveloperRepository developerRepository = new DeveloperRepositoryImpl();
 
 
     public Developer createDeveloper(String firstname,

@@ -5,43 +5,40 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>CRUD_App_JDBC_Test_02</artifactId>
+    <artifactId>CRUD_App_Hibernate_Test_03</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <gson.version>2.10</gson.version>
-        <mysql.connector.version>8.0.31</mysql.connector.version>
-        <liquibase.connector.version>4.18.0</liquibase.connector.version>
+        <lombok.connector.version>1.18.24</lombok.connector.version>
         <junit.connector.version>4.13.2</junit.connector.version>
         <mockito.connector.version>4.10.0</mockito.connector.version>
+        <postgresql.connector.version>42.5.1</postgresql.connector.version>
+        <hibernate.connector.version>5.6.14.Final</hibernate.connector.version>
+        <flywaydb.connector.version>9.8.1</flywaydb.connector.version>
+
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>${gson.version}</version>
-        </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.24</version>
+            <version>${lombok.connector.version}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql.connector.version}</version>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.connector.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-core</artifactId>
-            <version>${liquibase.connector.version}</version>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.connector.version}</version>
         </dependency>
 
         <dependency>
@@ -57,6 +54,7 @@
             <version>${mockito.connector.version}</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -64,24 +62,31 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>${flywaydb.connector.version}</version>
+        </dependency>
 
     </dependencies>
+
+
 
     <build>
         <plugins>
             <plugin>
-                <groupId>org.liquibase</groupId>
-                <artifactId>liquibase-maven-plugin</artifactId>
-                <version>3.6.1</version>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>9.8.1</version>
                 <configuration>
-                    <changeLogFile>src/main/resources/db_changelog_master.yaml</changeLogFile>
-                    <url>jdbc:mysql://localhost:3306/developers_database</url>
-                    <username>root</username>
-                    <password>1234</password>
+                    <url>jdbc:postgresql://localhost:5432/developers_database</url>
+                    <user>postgres</user>
+                    <password>123</password>
+                    <cleanDisabled>false</cleanDisabled>
+                    <locations>
+                        <location>filesystem:C:\Users\Андрей\IdeaProjects\CRUD_App_Hibernate_Test_03\src\main\resources\db.migration</location>
+                    </locations>
                 </configuration>
-                <goals>
-                    <goal>update</goal>
-                </goals>
             </plugin>
         </plugins>
     </build>

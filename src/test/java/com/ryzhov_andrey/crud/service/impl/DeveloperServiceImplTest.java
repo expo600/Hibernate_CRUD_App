@@ -3,7 +3,7 @@ package com.ryzhov_andrey.crud.service.impl;
 import com.ryzhov_andrey.crud.model.Developer;
 import com.ryzhov_andrey.crud.model.Status;
 import com.ryzhov_andrey.crud.repository.DeveloperRepository;
-import com.ryzhov_andrey.crud.repository.jdbc.JdbcDeveloperRepositoryImpl;
+import com.ryzhov_andrey.crud.repository.impl.DeveloperRepositoryImpl;
 import com.ryzhov_andrey.crud.service.DeveloperService;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 class DeveloperServiceImplTest {
 
-    private DeveloperRepository developerRepository = Mockito.mock(JdbcDeveloperRepositoryImpl.class);
+    private DeveloperRepository developerRepository = Mockito.mock(DeveloperRepositoryImpl.class);
     private DeveloperService serviceUnderTest = new DeveloperServiceImpl(developerRepository);
 
 

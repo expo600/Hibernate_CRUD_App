@@ -2,7 +2,7 @@ package com.ryzhov_andrey.crud.service.impl;
 
 import com.ryzhov_andrey.crud.model.Specialty;
 import com.ryzhov_andrey.crud.repository.SpecialtyRepository;
-import com.ryzhov_andrey.crud.repository.jdbc.JdbcSpecialtyRepositoryImpl;
+import com.ryzhov_andrey.crud.repository.impl.SpecialtyRepositoryImpl;
 import com.ryzhov_andrey.crud.service.SpecialtyService;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public class SpecialtyServiceImpl implements SpecialtyService {
     }
 
     public SpecialtyServiceImpl() {
-        this.specialtyRepository = new JdbcSpecialtyRepositoryImpl();
+        this.specialtyRepository = new SpecialtyRepositoryImpl();
     }
 
     @Override

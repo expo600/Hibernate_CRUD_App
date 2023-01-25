@@ -1,7 +1,6 @@
 package com.ryzhov_andrey.crud.view;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+
 import com.ryzhov_andrey.crud.controller.SpecialtyController;
 import com.ryzhov_andrey.crud.model.Specialty;
 import com.ryzhov_andrey.crud.model.Status;

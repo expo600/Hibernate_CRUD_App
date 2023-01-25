@@ -2,7 +2,7 @@ package com.ryzhov_andrey.crud.service.impl;
 
 import com.ryzhov_andrey.crud.model.Skill;
 import com.ryzhov_andrey.crud.repository.SkillRepository;
-import com.ryzhov_andrey.crud.repository.jdbc.JdbcSkillRepositoryImpl;
+import com.ryzhov_andrey.crud.repository.impl.SkillRepositoryImpl;
 import com.ryzhov_andrey.crud.service.SkillService;
 
 import java.util.List;
@@ -16,7 +16,7 @@ public class SkillServiceImpl implements SkillService {
     }
 
     public SkillServiceImpl() {
-        this.skillRepository = new JdbcSkillRepositoryImpl();
+        this.skillRepository = new SkillRepositoryImpl();
     }
 
     @Override

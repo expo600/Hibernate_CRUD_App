@@ -1,9 +1,11 @@
-.idea/
-target/
+.idea/*
 
 *.class
+
 *.war
 *.jar
 *.ear
 *.rar
-*.txt
+/out
+/META-INF
+/target

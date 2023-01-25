@@ -7,9 +7,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="CRUD_App_JDBC_Test_02" />
         <module name="Console_CRUD_Application" />
         <module name="CRUD_App_JDBC_Test" />
-        <module name="CRUD_App_JDBC_Test_02" />
+        <module name="CRUD_App_Hibernate_Test_03" />
       </profile>
     </annotationProcessing>
   </component>

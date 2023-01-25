@@ -2,7 +2,7 @@ package com.ryzhov_andrey.crud.service.impl;
 
 import com.ryzhov_andrey.crud.model.Developer;
 import com.ryzhov_andrey.crud.repository.DeveloperRepository;
-import com.ryzhov_andrey.crud.repository.jdbc.JdbcDeveloperRepositoryImpl;
+import com.ryzhov_andrey.crud.repository.impl.DeveloperRepositoryImpl;
 import com.ryzhov_andrey.crud.service.DeveloperService;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public class DeveloperServiceImpl implements DeveloperService {
     }
 
     public DeveloperServiceImpl() {
-        this.developerRepository = new JdbcDeveloperRepositoryImpl();
+        this.developerRepository = new DeveloperRepositoryImpl();
     }
 
     @Override

@@ -3,13 +3,14 @@ package com.ryzhov_andrey.crud.controller;
 import com.ryzhov_andrey.crud.model.Specialty;
 import com.ryzhov_andrey.crud.model.Status;
 import com.ryzhov_andrey.crud.repository.SpecialtyRepository;
-import com.ryzhov_andrey.crud.repository.jdbc.JdbcSpecialtyRepositoryImpl;
+import com.ryzhov_andrey.crud.repository.impl.SpecialtyRepositoryImpl;
+
 
 import java.util.List;
 
 public class SpecialtyController {
 
-    private final SpecialtyRepository specialtyRepository = new JdbcSpecialtyRepositoryImpl();
+    private final SpecialtyRepository specialtyRepository = new SpecialtyRepositoryImpl();
 
     public Specialty createSpecialty(String name, Status status) {
         Specialty specialty = new Specialty(null, name, status);

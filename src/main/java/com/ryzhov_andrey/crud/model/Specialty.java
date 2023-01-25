@@ -1,21 +1,37 @@
 package com.ryzhov_andrey.crud.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+import javax.persistence.*;
+
+@Getter
+@Setter
+@Entity
+@Table(name = "specialties")
 public class Specialty {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+    @Column(name = "specialty_name")
     private String name;
+
+    @Column(name = "status_name")
+    @Enumerated(EnumType.STRING)
     private Status status;
 
 
-    public Specialty(Long id, String name) {
-        this.id = id;
+    public Specialty() {
+    }
+
+    public Specialty(String name) {
         this.name = name;
     }
 
-    public Specialty( String name) {
+    public Specialty(Long id, String name) {
+        this.id = id;
         this.name = name;
     }
 
@@ -23,9 +39,6 @@ public class Specialty {
         this.id = id;
         this.name = name;
         this.status = status;
-    }
-
-    public Specialty() {
     }
 
     @Override

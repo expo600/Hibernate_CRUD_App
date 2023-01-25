@@ -1,28 +1,19 @@
 package com.ryzhov_andrey.crud.service.impl;
 
-import com.ryzhov_andrey.crud.model.Developer;
 import com.ryzhov_andrey.crud.model.Skill;
 import com.ryzhov_andrey.crud.model.Status;
-import com.ryzhov_andrey.crud.repository.DeveloperRepository;
 import com.ryzhov_andrey.crud.repository.SkillRepository;
-import com.ryzhov_andrey.crud.repository.jdbc.JdbcDeveloperRepositoryImpl;
-import com.ryzhov_andrey.crud.repository.jdbc.JdbcSkillRepositoryImpl;
-import com.ryzhov_andrey.crud.service.DeveloperService;
+import com.ryzhov_andrey.crud.repository.impl.SkillRepositoryImpl;
 import com.ryzhov_andrey.crud.service.SkillService;
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
@@ -31,7 +22,7 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 class SkillServiceImplTest {
 
-    private SkillRepository skillRepository = Mockito.mock(JdbcSkillRepositoryImpl.class);
+    private SkillRepository skillRepository = Mockito.mock(SkillRepositoryImpl.class);
     private SkillService serviceUnderTest = new SkillServiceImpl(skillRepository);
 
 

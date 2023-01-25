@@ -3,13 +3,14 @@ package com.ryzhov_andrey.crud.controller;
 import com.ryzhov_andrey.crud.model.Skill;
 import com.ryzhov_andrey.crud.model.Status;
 import com.ryzhov_andrey.crud.repository.SkillRepository;
-import com.ryzhov_andrey.crud.repository.jdbc.JdbcSkillRepositoryImpl;
+import com.ryzhov_andrey.crud.repository.impl.SkillRepositoryImpl;
+
 
 import java.util.List;
 
 public class SkillController {
 
-    private final SkillRepository skillRepository = new JdbcSkillRepositoryImpl();
+    private final SkillRepository skillRepository = new SkillRepositoryImpl();
 
     public Skill createSkill(String name, Status status)  {
         Skill skill = new Skill(null, name,status);

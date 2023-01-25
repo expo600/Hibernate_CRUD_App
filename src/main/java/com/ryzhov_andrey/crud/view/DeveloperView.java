@@ -1,7 +1,6 @@
 package com.ryzhov_andrey.crud.view;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+
 import com.ryzhov_andrey.crud.controller.DeveloperController;
 import com.ryzhov_andrey.crud.controller.SkillController;
 import com.ryzhov_andrey.crud.controller.SpecialtyController;
@@ -148,12 +147,9 @@ public class DeveloperView extends BaseView {
         List<Specialty> currentSpecialties = specialtyController.getAllSpecialties();
         System.out.println(currentSpecialties);
         long choice = scanner.nextLong();
-        while (choice != -1) {
-            Long finalChoice = choice;
             specialty = currentSpecialties.stream().filter(s -> s.getId()
-                                          .equals(finalChoice)).findFirst().orElse(null);
-            choice = scanner.nextLong();
-        }
+                                          .equals(choice)).findFirst().orElse(null);
+
         return specialty;
     }
 }
