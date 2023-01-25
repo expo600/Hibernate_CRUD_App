@@ -17,20 +17,20 @@
 
 # Требования:
 
-Придерживаться шаблона MVC (пакеты model, repository, service, controller, view)
-
-Для миграции БД использовать https://www.liquibase.org/
-
-Сервисный слой приложения должен быть покрыт юнит тестами (junit + mockito).
-
-Для импорта библиотек использовать Maven
+Все CRUD операции для каждой из сущностей
+Придерживаться подхода MVC
+Для сборки проекта использовать Maven
+Для взаимодействия с БД - Hibernate
+Для конфигурирования Hibernate - аннотации
+Инициализация БД должна быть реализована с помощью flyway
+Сервисный слой приложения должен быть покрыт юнит тестами (junit + mockito)
 
 # Технологии:
-Java, MySQL, JDBC, Maven, Liquibase, JUnit, Mockito
+Java, PostgreSQL, Hibernate, Maven, Flyway, JUnit, Mockito
 
 # Инструкция по запуску:
   
-1. Перейти в репозиторий по ссылке https://github.com/expo600/Console_CRUD_App_02
+1. Перейти в репозиторий по ссылке https://github.com/expo600/Hibernate_CRUD_App
 
 2. Кликнуть зеленую кнопку "Clone or Download" в правой верхней части страницы.
 
