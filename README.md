@@ -27,8 +27,8 @@
   
 Сервисный слой приложения должен быть покрыт юнит тестами (junit + mockito)
 
-# Технологии:
-# Java, PostgreSQL, Hibernate, Maven, Flyway, JUnit, Mockito
+ Технологии:
+ Java, PostgreSQL, Hibernate, Maven, Flyway, JUnit, Mockito
 
 # Инструкция по запуску:
   
