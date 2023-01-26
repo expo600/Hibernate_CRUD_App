@@ -3,9 +3,9 @@
 Описание
 Необходимо реализовать консольное CRUD приложение, которое взаимодействует с БД и позволяет выполнять все CRUD операции над сущностями:
 
-* Developer (id, firstName, lastName, List<Skill> skills, Specialty specialty)
-* Skill
-* Specialty
+* Developer (id, firstName, lastName, List<Skill> skills, Specialty specialty, Status status)
+* Skill (id, name, Status status)
+* Specialty (id, name, Status status)
 * Status (enum ACTIVE, DELETED)
   
 Каждая сущность имеет поле Status. 
