@@ -1,11 +1,13 @@
 package com.ryzhov_andrey.crud.repository.impl;
 
 import com.ryzhov_andrey.crud.model.Developer;
+import com.ryzhov_andrey.crud.model.Skill;
 import com.ryzhov_andrey.crud.model.Specialty;
 import com.ryzhov_andrey.crud.model.Status;
 import com.ryzhov_andrey.crud.repository.DeveloperRepository;
 import com.ryzhov_andrey.crud.utils.HibernateUtil;
 import org.hibernate.HibernateException;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -36,7 +38,10 @@ public class DeveloperRepositoryImpl implements DeveloperRepository {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
 
-            developerList = session.createQuery(" FROM Developer ", Developer.class).list();
+            SQLQuery sqlQuery = session
+                    .createSQLQuery("SELECT * FROM developers WHERE status_name = 'ACTIVE' ORDER BY id ;");
+            sqlQuery.addEntity(Developer.class);
+            developerList = sqlQuery.list();
 
             transaction.commit();
 
@@ -49,15 +54,11 @@ public class DeveloperRepositoryImpl implements DeveloperRepository {
 
     @Override
     public Developer create(Developer developer) {
-//        Developer dev = new Developer();
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
 
-//            Long  developerId =
-           session.save(developer);
-
-//            dev = session.get(Developer.class, developerId);
+            session.save(developer);
 
             transaction.commit();
 

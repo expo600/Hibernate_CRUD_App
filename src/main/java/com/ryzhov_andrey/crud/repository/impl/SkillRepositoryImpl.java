@@ -41,7 +41,7 @@ public class SkillRepositoryImpl implements SkillRepository {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
 
-            SQLQuery sqlQuery = session.createSQLQuery("SELECT * FROM skills WHERE status_name = 'ACTIVE' ;");
+            SQLQuery sqlQuery = session.createSQLQuery("SELECT * FROM skills WHERE status_name = 'ACTIVE' ORDER BY id ;");
             sqlQuery.addEntity(Skill.class);
             skillList = sqlQuery.list();
             transaction.commit();

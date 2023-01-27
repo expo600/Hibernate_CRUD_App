@@ -2,6 +2,7 @@ package com.ryzhov_andrey.crud.view;
 
 
 import com.ryzhov_andrey.crud.controller.SpecialtyController;
+import com.ryzhov_andrey.crud.model.Skill;
 import com.ryzhov_andrey.crud.model.Specialty;
 import com.ryzhov_andrey.crud.model.Status;
 import java.util.List;
@@ -11,10 +12,12 @@ public class SpecialtyView extends BaseView {
 
     private final String createMenuMessage = "Select action on specialty:\n" +
             " 1. Create\n" +
-            " 2. Update\n" +
-            " 3. Delete\n" +
-            " 4. GetAll\n" +
-            " 5. Exit";
+            " 2. ReadById\n" +
+            " 3. Update\n" +
+            " 4. Delete\n" +
+            " 5. GetAll\n" +
+            " 6. Back\n" +
+            " 7. Exit";
     private String line = "----------------------------------------------";
     private final Scanner scanner = new Scanner(System.in);
     private final SpecialtyController specialtyController = new SpecialtyController();
@@ -26,12 +29,22 @@ public class SpecialtyView extends BaseView {
         String name = scanner.next();
         Specialty createdSpecialty = null;
         try {
-            createdSpecialty = specialtyController.createSpecialty(name,Status.ACTIVE);
+            createdSpecialty = specialtyController.createSpecialty(name, Status.ACTIVE);
         } catch (Exception e) {
             e.printStackTrace();
         }
         System.out.println("Created specialty ...");
         System.out.println("Successful operation");
+    }
+
+    @Override
+    void readById() {
+        System.out.println(line);
+        System.out.println("Edit specialty\n" + "Enter ID: ");
+        Long id = scanner.nextLong();
+        Specialty specialtyById = specialtyController.getSpecialtyById(id);
+        System.out.println(" ID | SPECIALTY | STATUS \n");
+        System.out.println(specialtyById.toString());
     }
 
     @Override
@@ -41,7 +54,7 @@ public class SpecialtyView extends BaseView {
         Long id = scanner.nextLong();
         System.out.println("Enter specialty name: ");
         String name = scanner.next();
-        Specialty updateSpecialty = specialtyController.updateSpecialty(id, name,Status.ACTIVE);
+        Specialty updateSpecialty = specialtyController.updateSpecialty(id, name, Status.ACTIVE);
         System.out.println("Updated specialty ...");
         System.out.println("Successful operation");
     }
@@ -67,9 +80,14 @@ public class SpecialtyView extends BaseView {
     void print() {
         System.out.println("List of specialties: ");
         List<Specialty> specialties = specialtyController.getAllSpecialties();
-        System.out.println(" ID | SPECIALTY | STATUS | \n");
+        System.out.println(" ID | SPECIALTY | STATUS  \n");
 
         specialties.forEach((r) -> System.out.println(r.toString()));
+    }
+
+    @Override
+    void backToBeginning() {
+        new MainView().run();
     }
 
     @Override
@@ -85,26 +103,30 @@ public class SpecialtyView extends BaseView {
                     create();
                     break;
                 case 2:
-                    update();
+                    readById();
                     break;
                 case 3:
-                    delete();
+                    update();
                     break;
                 case 4:
-                    print();
+                    delete();
                     break;
                 case 5:
+                    print();
+                    break;
+                case 6:
+                    backToBeginning();
+                case 7:
                     isExit = true;
                     break;
                 default:
                     System.out.println("Invalid input. Please try again!");
                     break;
             }
-
             if (isExit)
                 break;
         }
         scanner.close();
-
     }
+
 }

@@ -5,7 +5,6 @@ import com.ryzhov_andrey.crud.controller.SkillController;
 import com.ryzhov_andrey.crud.model.Skill;
 import com.ryzhov_andrey.crud.model.Specialty;
 import com.ryzhov_andrey.crud.model.Status;
-
 import java.util.List;
 import java.util.Scanner;
 
@@ -13,28 +12,40 @@ public class SkillView extends BaseView {
 
     private final String createMenuMessage = "Select action on skill:\n" +
             " 1. Create\n" +
-            " 2. Update\n" +
-            " 3. Delete\n" +
-            " 4. GetAll\n" +
-            " 5. Exit";
+            " 2. ReadById\n" +
+            " 3. Update\n" +
+            " 4. Delete\n" +
+            " 5. GetAll\n" +
+            " 6. Back\n" +
+            " 7. Exit";
     private String line = "----------------------------------------------";
     private final Scanner scanner = new Scanner(System.in);
     private final SkillController skillController = new SkillController();
 
 
     @Override
-    public void create()  {
+    public void create() {
         System.out.println(line);
         System.out.println("Enter skill name: ");
         String name = scanner.next();
         Skill createdSkill = null;
         try {
-            createdSkill = skillController.createSkill(name,Status.ACTIVE);
+            createdSkill = skillController.createSkill(name, Status.ACTIVE);
         } catch (Exception e) {
             e.printStackTrace();
         }
         System.out.println("Created skill ...");
         System.out.println("Successful operation");
+    }
+
+    @Override
+    void readById() {
+        System.out.println(line);
+        System.out.println("Edit skill\n" + "Enter ID: ");
+        Long id = scanner.nextLong();
+        Skill readIdSkill = skillController.getSkillById(id);
+        System.out.println(" ID |  SKILL  | STATUS \n");
+        System.out.println(readIdSkill.toString());
     }
 
     @Override
@@ -44,7 +55,7 @@ public class SkillView extends BaseView {
         Long id = scanner.nextLong();
         System.out.println("Enter skill name: ");
         String name = scanner.next();
-        Skill updatedSkill = skillController.updateSkill(id, name,Status.ACTIVE);
+        Skill updatedSkill = skillController.updateSkill(id, name, Status.ACTIVE);
         System.out.println("Updated skill ...");
         System.out.println("Successful operation");
     }
@@ -52,9 +63,9 @@ public class SkillView extends BaseView {
     @Override
     void delete() {
         System.out.println(line);
-        System.out.println("Delete skill\n" + "Enter ID: " );
+        System.out.println("Delete skill\n" + "Enter ID: ");
         Long id = scanner.nextLong();
-      Skill deleteSkill = skillController.getSkillById(id);
+        Skill deleteSkill = skillController.getSkillById(id);
         try {
             skillController.deleteSkill(id);
             System.out.println("Deleted skill ...");
@@ -69,9 +80,13 @@ public class SkillView extends BaseView {
     void print() {
         System.out.println("List of skills: ");
         List<Skill> skills = skillController.getAllSkills();
-        System.out.println(" ID | SKILL | STATUS | \n");
-
+        System.out.println(" ID |  SKILL  | STATUS  \n");
         skills.forEach((r) -> System.out.println(r.toString()));
+    }
+
+    @Override
+    void backToBeginning() {
+        new MainView().run();
     }
 
     @Override
@@ -87,26 +102,29 @@ public class SkillView extends BaseView {
                     create();
                     break;
                 case 2:
-                    update();
+                    readById();
                     break;
                 case 3:
-                    delete();
+                    update();
                     break;
                 case 4:
-                    print();
+                    delete();
                     break;
                 case 5:
+                    print();
+                    break;
+                case 6:
+                    backToBeginning();
+                case 7:
                     isExit = true;
                     break;
                 default:
                     System.out.println("Invalid input. Please try again!");
                     break;
             }
-
             if (isExit)
                 break;
         }
         scanner.close();
     }
-
 }

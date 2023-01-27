@@ -9,6 +9,7 @@ public class MainView {
     private final Scanner scanner = new Scanner(System.in);
     private String line = "----------------------------------------------";
 
+
     public void run() {
         System.out.println(line);
         System.out.println("Choose an action: \n" +
@@ -17,6 +18,7 @@ public class MainView {
                 "   3. Developer.\n" +
                 "   4. Exit ");
         System.out.println(line);
+
         Integer choice = scanner.nextInt();
 
         switch (choice) {

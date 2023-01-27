@@ -39,7 +39,7 @@ public class SpecialtyRepositoryImpl implements SpecialtyRepository {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
 
-            SQLQuery sqlQuery = session.createSQLQuery("SELECT * FROM specialties WHERE status_name = 'ACTIVE' ;");
+            SQLQuery sqlQuery = session.createSQLQuery("SELECT * FROM specialties WHERE status_name = 'ACTIVE' ORDER BY id;");
             sqlQuery.addEntity(Specialty.class);
             specialtyList = sqlQuery.list();
             transaction.commit();

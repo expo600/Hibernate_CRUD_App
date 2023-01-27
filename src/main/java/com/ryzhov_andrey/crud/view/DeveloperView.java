@@ -17,15 +17,18 @@ public class DeveloperView extends BaseView {
 
     private final String createMenuMessage = "Select action on developer:\n" +
             " 1. Create\n" +
-            " 2. Update\n" +
-            " 3. Delete\n" +
-            " 4. GetAll\n" +
-            " 5. Exit";
+            " 2. ReadById\n" +
+            " 3. Update\n" +
+            " 4. Delete\n" +
+            " 5. GetAll\n" +
+            " 6. Back\n" +
+            " 7. Exit";
     private String line = "----------------------------------------------";
     private final Scanner scanner = new Scanner(System.in);
     private final DeveloperController developerController = new DeveloperController();
     private final SkillController skillController = new SkillController();
     private final SpecialtyController specialtyController = new SpecialtyController();
+
 
     @Override
     void create() {
@@ -42,6 +45,16 @@ public class DeveloperView extends BaseView {
                 skills, specialty, Status.ACTIVE);
         System.out.println("Created developer ...");
 
+    }
+
+    @Override
+    void readById() {
+        System.out.println(line);
+        System.out.println("Edit specialty\n" + "Enter ID: ");
+        Long id = scanner.nextLong();
+        Developer developerById = developerController.getDeveloperById(id);
+        System.out.println(" ID |  NAME  |  LASTNAME  |   SKILL   |  SPECIALTY | STATUS \n");
+        System.out.println(developerById);
     }
 
     @Override
@@ -83,9 +96,14 @@ public class DeveloperView extends BaseView {
     void print() {
         System.out.println("List of developers: ");
         List<Developer> developers = developerController.getAllDevelopers();
-        System.out.println(" ID |  NAME  |  LASTNAME  |  SKILL  |   SPECIALTY  | STATUS |\n");
+        System.out.println(" ID |  NAME  |  LASTNAME  |   SKILL   |  SPECIALTY | STATUS \n");
 
         developers.forEach((w) -> System.out.println((w.toString())));
+    }
+
+    @Override
+    void backToBeginning() {
+        new MainView().run();
     }
 
     @Override
@@ -101,28 +119,30 @@ public class DeveloperView extends BaseView {
                     create();
                     break;
                 case 2:
-                    update();
+                    readById();
                     break;
                 case 3:
-                    delete();
+                    update();
                     break;
                 case 4:
-                    print();
+                    delete();
                     break;
                 case 5:
+                    print();
+                    break;
+                case 6:
+                    backToBeginning();
+                case 7:
                     isExit = true;
                     break;
                 default:
                     System.out.println("Invalid input. Please try again!");
                     break;
             }
-
             if (isExit)
                 break;
         }
         scanner.close();
-
-
     }
 
     private List<Skill> addSkills() {
@@ -147,8 +167,8 @@ public class DeveloperView extends BaseView {
         List<Specialty> currentSpecialties = specialtyController.getAllSpecialties();
         System.out.println(currentSpecialties);
         long choice = scanner.nextLong();
-            specialty = currentSpecialties.stream().filter(s -> s.getId()
-                                          .equals(choice)).findFirst().orElse(null);
+        specialty = currentSpecialties.stream().filter(s -> s.getId()
+                .equals(choice)).findFirst().orElse(null);
 
         return specialty;
     }

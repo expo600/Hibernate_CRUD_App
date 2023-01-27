@@ -6,6 +6,8 @@ public abstract class BaseView {
 
     abstract void create();
 
+    abstract void readById();
+
     abstract void update();
 
     abstract void delete();
@@ -13,5 +15,7 @@ public abstract class BaseView {
     abstract void print();
 
     abstract void show();
+
+    abstract void backToBeginning();
 
 }
