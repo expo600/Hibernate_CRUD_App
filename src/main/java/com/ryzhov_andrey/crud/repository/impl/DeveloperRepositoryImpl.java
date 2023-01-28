@@ -31,37 +31,11 @@ public class DeveloperRepositoryImpl implements DeveloperRepository {
     }
 
     @Override
-    public List<Developer> getAll() {
-
-        List<Developer> developerList = new ArrayList<>();
-
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-
-            SQLQuery sqlQuery = session
-                    .createSQLQuery("SELECT * FROM developers WHERE status_name = 'ACTIVE' ORDER BY id ;");
-            sqlQuery.addEntity(Developer.class);
-            developerList = sqlQuery.list();
-
-            transaction.commit();
-
-        } catch (HibernateException e) {
-            transaction.rollback();
-        }
-        return developerList;
-    }
-
-
-    @Override
     public Developer create(Developer developer) {
-
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-
             session.save(developer);
-
             transaction.commit();
-
         } catch (HibernateException e) {
             transaction.rollback();
         }
@@ -70,44 +44,41 @@ public class DeveloperRepositoryImpl implements DeveloperRepository {
 
     @Override
     public Developer update(Developer developer) {
-        Developer developerResult = new Developer();
-
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-
-            Developer dev = session.get(Developer.class, developer.getId());
-            dev.setFirstName(developer.getFirstName());
-            dev.setLastName(developer.getLastName());
-            dev.setSkills(developer.getSkills());
-            dev.setSpecialty(developer.getSpecialty());
-            dev.setStatus(Status.ACTIVE);
-
-            session.update(dev);
-
-            developerResult = session.get(Developer.class, developer.getId());
+            Developer resultDeveloper = (Developer) session.merge(developer);
             transaction.commit();
-
+            return resultDeveloper;
         } catch (HibernateException e) {
             transaction.rollback();
         }
-        return developerResult;
+        return null;
     }
 
     @Override
     public void deleteById(Long id) {
-
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-
-            Query query = session.createQuery("UPDATE Developer SET status =: status WHERE id =: id");
-            query.setParameter("status", Status.DELETED);
-            query.setParameter("id", id);
-            query.executeUpdate();
-
+            session.createQuery("UPDATE Developer SET status =: status WHERE id =: id")
+                    .setParameter("status", Status.DELETED)
+                    .setParameter("id", id)
+                    .executeUpdate();
             transaction.commit();
-
         } catch (HibernateException e) {
             transaction.rollback();
         }
+    }
+
+    @Override
+    public List<Developer> getAll() {
+        List<Developer> developerList = new ArrayList<>();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            SQLQuery sqlQuery = session
+                    .createSQLQuery("SELECT * FROM developers WHERE status_name = 'ACTIVE' ORDER BY id ;");
+            sqlQuery.addEntity(Developer.class);
+            developerList = sqlQuery.list();
+        } catch (HibernateException e) {
+        }
+        return developerList;
     }
 }

@@ -18,8 +18,7 @@ public class HibernateUtil {
     private HibernateUtil() {
     }
 
-    public static SessionFactory getSessionFactory() {
-
+    static {
         Properties properties = new Properties();
 
         try {
@@ -28,15 +27,15 @@ public class HibernateUtil {
             e.printStackTrace();
         }
 
+        Flyway flyway = Flyway.configure().dataSource(properties.getProperty("url"),
+                properties.getProperty("username"),
+                properties.getProperty("password")).load();
+        flyway.baseline();
+        flyway.migrate();
+    }
 
+    public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
-
-            Flyway flyway = Flyway.configure().dataSource(properties.getProperty("url"),
-                    properties.getProperty("username"),
-                    properties.getProperty("password")).load();
-            flyway.baseline();
-            flyway.migrate();
-
             try {
                 Configuration configuration = new Configuration().configure();
 
